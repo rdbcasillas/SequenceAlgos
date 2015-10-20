@@ -1,4 +1,5 @@
 fastq = open('/Users/rdbcasillas/programming/SequenceAlgos/SRR835775_1.first1000.fastq')
+import matplotlib.pyplot as pl
 
 def readfastq():
     sequences = []
@@ -16,6 +17,21 @@ def readfastq():
 
     return sequences, quals
 
+def qualConversion(qual):
+    return ord(qual) - 33
+
+def createHistogram(quals):
+    hist = [0] * 50
+    for qual in quals:
+        for phred in qual:
+            q = qualConversion(phred)
+            hist[q] += 1
+    return hist
+
 sequences, qualities = readfastq()
 
-print sequences[1], qualities[:5]
+histogram = createHistogram(qualities)
+
+pl.bar(range(len(histogram)), histogram)
+
+pl.show()
