@@ -1,4 +1,4 @@
-fastq = open('/Users/rdbcasillas/programming/SequenceAlgos/SRR835775_1.first1000.fastq')
+fastq = open('/Users/rdbcasillas/programming/SequenceAlgos/genomicData/SRR835775_1.first1000.fastq')
 import matplotlib.pyplot as pl
 
 def readfastq():
@@ -33,5 +33,6 @@ sequences, qualities = readfastq()
 histogram = createHistogram(qualities)
 
 pl.bar(range(len(histogram)), histogram)
+print histogram
 
 pl.show()
