@@ -46,7 +46,22 @@ def patternMatchStrandAware(p, sequence):
             occurrences.append(i)
     return  occurrences
 
-
-refGenome = open('/Users/rdbcasillas/programming/SequenceAlgos/genomicData/927.fasta')
+def approxPatternMatcher(p, sequence):
+    occurrences = []
+    for i in range(len(sequence) - len(p) + 1):
+        count = 0
+        Match = True
+        for j in range(len(p)):
+            if sequence[i+j] != p[j]:
+                    count += 1
+            if count > 2 : 
+                Match = False
+                break
+         
+        if Match:
+            occurrences.append(i)
+    return occurrences
+refGenome = open('/Users/rdbcasillas/programming/SequenceAlgos/genomicData/lambda_virus.fa')
 genome = getGenome(refGenome)
-print patternMatchStrandAware('AACG',genome.upper())
+print (patternMatchStrandAware('AGTCGA',genome))
+print (approxPatternMatcher('AGGAGGTT', genome))
