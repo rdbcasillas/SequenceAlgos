@@ -1,3 +1,4 @@
+#get the sequence out of fasta by removing header
 def getGenome(fasta):
     genome = ''
     for f in fasta:
@@ -5,7 +6,7 @@ def getGenome(fasta):
             genome = genome + f.rstrip() 
     return genome
 
-
+#Find the occurrences of the pattern using an inefficient algorithm
 def patternMatch(p, sequence):
     occurrences = []
     for i in range(len(sequence) - len(p) + 1):
@@ -18,6 +19,8 @@ def patternMatch(p, sequence):
             occurrences.append(i)
     return occurrences
 
+
+#Find the reverse complement of a sequence
 def reverseComplement(string):
     dict = {'A':'T', 'T':'A', 'G':'C', 'C':'G', 'N':'N'}
     reverse = ''
@@ -25,6 +28,7 @@ def reverseComplement(string):
         reverse = dict[i] + reverse
     return reverse
 
+#Find occurrences of the pattern assuming comparison with both strands
 def patternMatchStrandAware(p, sequence):
     occurrences = []
     rev_p = reverseComplement(p)
@@ -46,6 +50,7 @@ def patternMatchStrandAware(p, sequence):
             occurrences.append(i)
     return  occurrences
 
+#funtion that allows 2 mismatches in the pattern compared to reference
 def approxPatternMatcher(p, sequence):
     occurrences = []
     for i in range(len(sequence) - len(p) + 1):
@@ -57,11 +62,16 @@ def approxPatternMatcher(p, sequence):
             if count > 2 : 
                 Match = False
                 break
-         
         if Match:
             occurrences.append(i)
     return occurrences
+
+#get the genome from a file
 refGenome = open('/Users/rdbcasillas/programming/SequenceAlgos/genomicData/lambda_virus.fa')
+
+#Remove header
 genome = getGenome(refGenome)
+
+
 print (patternMatchStrandAware('AGTCGA',genome))
 print (approxPatternMatcher('AGGAGGTT', genome))

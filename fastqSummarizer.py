@@ -1,6 +1,8 @@
 fastq = open('/Users/rdbcasillas/programming/SequenceAlgos/genomicData/ERR037900_1.first1000.fastq')
 import matplotlib.pyplot as pl
 import itertools
+
+#Read the fastq to get all sequences and corresponding qualities in separate lists  
 def readfastq():
     sequences = []
     quals = []
@@ -17,9 +19,11 @@ def readfastq():
 
     return sequences, quals
 
+#convert the quality into phred score
 def qualConversion(qual):
     return ord(qual) - 33
 
+#Find the total qualities for a particular sequence cycle
 def seqcycleQC(sequences, quals):
     dictionary = {}
     for seq,qual in zip(sequences,quals):
@@ -31,6 +35,7 @@ def seqcycleQC(sequences, quals):
     return dictionary
 
 
+#Create a histogram that lists the count of a quality score
 def createHistogram(quals):
     hist = [0] * 50
     for qual in quals:
