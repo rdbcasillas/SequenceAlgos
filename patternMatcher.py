@@ -1,3 +1,14 @@
+#!/usr/bin/python
+
+import sys
+inputFile = sys.argv[1]
+
+try:
+    refGenome = open(inputFile)
+except IOError:
+    print "File %s does not exist" %inputFile
+
+
 #get the sequence out of fasta by removing header
 def getGenome(fasta):
     genome = ''
@@ -66,8 +77,6 @@ def approxPatternMatcher(p, sequence):
             occurrences.append(i)
     return occurrences
 
-#get the genome from a file
-refGenome = open('/Users/rdbcasillas/programming/SequenceAlgos/genomicData/lambda_virus.fa')
 
 #Remove header
 genome = getGenome(refGenome)
