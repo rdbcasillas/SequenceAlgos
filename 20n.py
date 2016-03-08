@@ -6,7 +6,8 @@ from Bio import SeqRecord
 
 
 #function that converts fasta files into dictionaries with Seq ids as keys 
-#and Seq Object as values
+#and Seq Object as values. Arabidopsis fasta is the file that contains DNA sequences 
+#and PF00891 is the file that contains protein sequences(reference)
 
 def fasta_as_dict():
     arabi_dict = {}
