@@ -1,0 +1,56 @@
+Title         : Welcome
+Author        : You
+Logo          : True
+
+[TITLE]
+
+# Madoko 
+
+Since the purpose of this problem is to find a decent value for $p$, lets start by takin $p=0.3$. Now we are given $N=100$ and $m=60$. 
+Now, we are given that
+~ Equation
+Y = \sum_{k=1}^{N} Z_k
+\text{where } Z_k = \begin{cases}
+1  & \text{with prob } p \\
+-1 & \text{with prob } 1-p \\
+\end{cases}
+~
+
+For the likelihood ratio, we are given that:
+~ Equation
+f(Z_j)/\tilde{f}(Z_j) = \begin{cases}
+1/2p  & \text{if } Z_j = 1 \\
+1/2(1-p) & \text{if } Z_j = -1 \\
+\end{cases}
+~
+
+After running the loop, we notice that the $ \sum Z_j $ comes out to be -34 and
+the likelhood ratio turns out to be 1.834e-58. We obviously convert the ratio to
+be 0 since $ \sum Z_j $ happens to be lower than $m$ which is 70. After running
+the simulation 1000 times with $p = 0.3$, it becomes clear that we never reach
+the desired state of $Y>70$. Here is the plot after 1000 simulations: 
+
+
+Hence this is **not** a good choice for p.
+
+Lets take $p = 0.7$. After running the simulation 1000 times, we notice that 
+since m is very big, this biased random walk also does a terrible job. Here is 
+the plot:
+
+
+We notice that more summations of Zj are moving towards greater than 0 but there
+only on 1 instance the final likelihood ratio is not zero and hence we know that on only
+1 instance, we have $Y>m$. Hence, this is not a **not** a good choice for p. 
+
+
+So, lets take $p=0.78$. After running the simulation 1000 times, 
+following is the plot we get:
+
+This biased random walking is doing an okay job of giving us some probability 
+of having $Y>70$. In fact, there are a total of 50 such instances in this case.
+We know that $P(Y>70)$ is basically $Eg[Y]$. So we can say that $Eg[y]$ = .05.
+
+Of course, we can keep increasing the value of p to get better probability but
+then we end up making the random walk too biased. Hence it can be said said that
+$p=0.78$ **is a good choice** of p without the walker being too biased.
+
