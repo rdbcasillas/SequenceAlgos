@@ -1,5 +1,5 @@
-Title         : Welcome
-Author        : You
+Title         : Assignment4
+Author        : Vatsal Mehra
 Logo          : True
 
 [TITLE]
@@ -15,12 +15,22 @@ This is because $e^{-x}$ is a pdf. Since we can sample from $e^{-x}$, we calcula
 the values of $x$ from it by using python's random number generator for $y$ in -$log(1/y)$. These random 
 variables are then inserted into our $g(x)$ which is $cos(x)$.  
 
+Here is the plot showing why $e^{-x}$ is a decent choice for f(x):
+![Screen Shot 2016-03-14 at 10.21.39 AM]
+
+[Screen Shot 2016-03-14 at 10.21.39 AM]: images/Screen-Shot-2016-03-14-at-10.21.39-AM.png "Screen Shot 2016-03-14 at 10.21.39 AM" { width:auto; max-width:90% }
+
+
 We know that for Monte Carlo integration:
 ~ Equation
 \int_0^\infty g(x)f(x)dx = (1/N) \sum_{j=1}^{N} g(X_j) \text{where }  X_j \sim f
 ~
 
-We get $(1/N) \sum_{j=1}^{N} g(X_j)$ to be 0.50522 
+The random generator used is numpy's random.exponential function. Using this gives
+us the values of $x$ which are then plugged into $cos(x)$ 
+
+We get $(1/N) \sum_{j=1}^{N} g(X_j)$ to be 0.50522 (of course this will vary a bit 
+depending on random values)
 
 So now to check whether our breakdown of functions and the subsequent sampling 
 was a good idea or not, lets calculate the Chebyshev's inequality. 
@@ -30,17 +40,61 @@ Chebyshev's inequality says
 P \lbrack((1/N) \sum_{j=1}^{N} g(X_j) - E[g])^2 > var_{f}(g)/(N* \delta) \rbrack < \delta
 ~
 
-Here $\delta = 0.01$
+Here $\delta = 0.01$ and we also know that $E[g] = 0.5$. N was taken to be 1000. 
 
 In order to check this, we are also given $var_{f}(g)$ to be 
 ~ Equation
 (1/N-1) \sum_{n=1}^{N}(g(X_j) - \mu)^2 \text {where } \mu = (1/N) \sum_{n=1}^{N} g(X_j)
 ~
 
-So after solving LHS in Eq3, we notice that we never have error square to be greater than
-$var_{f}(g)/(N* \delta)$. This can be seen from the following plot:
+
+So after solving LHS in Eq3, we notice after running the experiment 
+1000 times that we never have error square to be greater than
+$var_{f}(g)/(N* \delta)$. This mean the probability in Equation 3 above is 0
+and hence less than $\delta$. So we can conclude that we have done a good 
+approximation.
 
 
+<br>
+<br>
+
+## 
+We have the integral :
+~ Equation
+h(x) = \int_{-\pi}^{\pi}(1 + cos(x))^{-1/3}dx
+~
+
+In order to compute approximation to this integral, we can notice that it
+cannot be sampled from like previous question since its hard to find out $g(x)$
+and $f(x)$. This time, we have to take importance sampling into account.
+So by multiplying and dividing lets break this $h(x)$ into $g(x)$ and 
+$f(x)$ such that $g(x) = (4/cos(x/2))(1+cosx)^{1/3}$ and $f(x) = (cos(x/2)/4$
+
+We do this because it can be seen that integral of this f(x) over -pi to pi, 
+turns out to be 1 and it also is a decent match with the plot of original h(x).
+
+Here is h(x):
+
+![Screen Shot 2016-03-14 at 11.22.55 AM]
+
+[Screen Shot 2016-03-14 at 11.22.55 AM]: images/Screen-Shot-2016-03-14-at-11.22.55-AM.png "Screen Shot 2016-03-14 at 11.22.55 AM" { width:auto; max-width:90% }
+
+
+<br>
+<br>
+
+And here is f(x) that we chose above:
+![Screen Shot 2016-03-14 at 10.40.09 AM]
+
+[Screen Shot 2016-03-14 at 10.40.09 AM]: images/Screen-Shot-2016-03-14-at-10.40.09-AM.png "Screen Shot 2016-03-14 at 10.40.09 AM" { width:auto; max-width:90% }
+
+
+So we sample from this f(x) after integrating and inverting the f(x) to get the
+values of x. These x values are achieved from $(2*\arcsin (2*y - 1))$ where y is
+sampled from python's random.uniform() generator. 
+
+Its important to keep in mind that here the integration after performing 
+important sampling is $\sum_{j=1}^{N}g(X_j)f(X_j)/\tilde{f}{(X_j)}$
 
 
 #Question2 
