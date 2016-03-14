@@ -3,8 +3,47 @@ Author        : You
 Logo          : True
 
 [TITLE]
+#Question1
+## 
+We have the integral
+~ Equation
+h(x) = \int_0^\infty e^{-x}cos(x)dx
+~
 
-# Question2 
+In order to solve for this, we take $f(x)$ to be $e^{-x}$ and $g(x)$ to be $cos(x)$.
+This is because $e^{-x}$ is a pdf. Since we can sample from $e^{-x}$, we calculate
+the values of $x$ from it by using python's random number generator for $y$ in -$log(1/y)$. These random 
+variables are then inserted into our $g(x)$ which is $cos(x)$.  
+
+We know that for Monte Carlo integration:
+~ Equation
+\int_0^\infty g(x)f(x)dx = (1/N) \sum_{j=1}^{N} g(X_j) \text{where }  X_j \sim f
+~
+
+We get $(1/N) \sum_{j=1}^{N} g(X_j)$ to be 0.50522 
+
+So now to check whether our breakdown of functions and the subsequent sampling 
+was a good idea or not, lets calculate the Chebyshev's inequality. 
+
+Chebyshev's inequality says
+~ Equation
+P \lbrack((1/N) \sum_{j=1}^{N} g(X_j) - E[g])^2 > var_{f}(g)/(N* \delta) \rbrack < \delta
+~
+
+Here $\delta = 0.01$
+
+In order to check this, we are also given $var_{f}(g)$ to be 
+~ Equation
+(1/N-1) \sum_{n=1}^{N}(g(X_j) - \mu)^2 \text {where } \mu = (1/N) \sum_{n=1}^{N} g(X_j)
+~
+
+So after solving LHS in Eq3, we notice that we never have error square to be greater than
+$var_{f}(g)/(N* \delta)$. This can be seen from the following plot:
+
+
+
+
+#Question2 
 
 Since the purpose of this problem is to find a decent value for $p$, lets start by takin $p=0.3$. Now we are given $N=100$ and $m=60$. 
 Now, we are given that
