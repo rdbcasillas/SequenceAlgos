@@ -54,6 +54,15 @@ $var_{f}(g)/(N* \delta)$. This mean the probability in Equation 3 above is 0
 and hence less than $\delta$. So we can conclude that we have done a good 
 approximation.
 
+Here is the plot showing satisfaction of Chebyshev's inequality:
+
+![chebyshev1]
+
+
+[chebyshev1]: images/chebyshev1.png "chebyshev1" { width:auto; max-width:90% }
+
+
+Notice that all values or error are coming out to be way smaller than $var_{f}(g)/(N* \delta)$
 
 <br>
 <br>
@@ -108,6 +117,18 @@ This inequality stays true even after running 1000 samples. So the probability
 from Equation3 is never greater than $\delta$ which means that we have done a 
 good job of approximating the integral. 
 
+Here is the plot showing chebyshev inequality result after 1000 runs:
+
+![chebyshev2]
+
+[chebyshev2]: images/chebyshev2.png "chebyshev2" { width:auto; max-width:90% }
+
+
+As can be seen from the plot, all values of error square stay lower 
+
+<br>
+<br>
+<br>
 
 #Question2 
 
