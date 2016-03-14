@@ -12,8 +12,8 @@ h(x) = \int_0^\infty e^{-x}cos(x)dx
 
 In order to solve for this, we take $f(x)$ to be $e^{-x}$ and $g(x)$ to be $cos(x)$.
 This is because $e^{-x}$ is a pdf. Since we can sample from $e^{-x}$, we calculate
-the values of $x$ from it by using python's random number generator for $y$ in -$log(1/y)$. These random 
-variables are then inserted into our $g(x)$ which is $cos(x)$.  
+the values of $x$ from it by using python's random number generator for $y$ in -$log(1/y)$
+(after integrate and invert). These random variables are then inserted into our $g(x)$ which is $cos(x)$.  
 
 Here is the plot showing why $e^{-x}$ is a decent choice for f(x):
 ![Screen Shot 2016-03-14 at 10.21.39 AM]
@@ -89,12 +89,24 @@ And here is f(x) that we chose above:
 [Screen Shot 2016-03-14 at 10.40.09 AM]: images/Screen-Shot-2016-03-14-at-10.40.09-AM.png "Screen Shot 2016-03-14 at 10.40.09 AM" { width:auto; max-width:90% }
 
 
-So we sample from this f(x) after integrating and inverting the f(x) to get the
+So we sample from this $f(x)$ after integrating and inverting the f(x) to get the
 values of x. These x values are achieved from $(2*\arcsin (2*y - 1))$ where y is
 sampled from python's random.uniform() generator. 
 
+After inserting these x values in our $g(x)$, we notice that the mean of these 
+values comes out to be around 6.55. 
+
 Its important to keep in mind that here the integration after performing 
 important sampling is $\sum_{j=1}^{N}g(X_j)f(X_j)/\tilde{f}{(X_j)}$
+
+For Equation3, we have $\delta = 0.01$ and we also know that 
+$E[g] = 0.564$. N was taken to be 1000. 
+
+After checking Chebyshev inequality, we notice that sq. of error comes out 
+to be approximately $0.17$ while the $var_{f}(g)/(N* \delta)$ (from equation 4) comes out to be around 1.6.
+This inequality stays true even after running 1000 samples. So the probability
+from Equation3 is never greater than $\delta$ which means that we have done a 
+good job of approximating the integral. 
 
 
 #Question2 
@@ -158,6 +170,9 @@ following is the plot we get:
 
 This biased random walking is doing an okay job of giving us some probability 
 of having $Y>70$. In fact, there are a total of 50 such instances in this case.
+After running the experiment with $p=0.78$, we notice that the number of 
+instances hovers between 40 and 60. 
+
 This number can be better seen if we take log values of likelihood ratio and plot
 the values again:
 
@@ -165,7 +180,8 @@ the values again:
 
 [randomwalk4]: images/randomwalk4.png "randomwalk4" { width:auto; max-width:90% }
 
-We know that $P(Y>70)$ is basically $Eg[Y]$. So we can say that $Eg[y]$ = .05.
+We know that $P(Y>70)$ is basically $Eg[Y]$. So we can say that $Eg[y]$ = .05
+when $p=0.78$.
 
 Of course, we can keep increasing the value of p to get better probability but
 then we end up making the random walk too biased. Hence it can be said said that
