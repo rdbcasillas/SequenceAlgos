@@ -16,11 +16,17 @@ the values of $x$ from it by using python's random number generator for $y$ in -
 (after integrate and invert). These random variables are then inserted into our $g(x)$ which is $cos(x)$.  
 
 Here is the plot showing why $e^{-x}$ is a decent choice for f(x):
-![Screen Shot 2016-03-14 at 10.21.39 AM]
 
-[Screen Shot 2016-03-14 at 10.21.39 AM]: images/Screen-Shot-2016-03-14-at-10.21.39-AM.png "Screen Shot 2016-03-14 at 10.21.39 AM" { width:auto; max-width:90% }
+<br>
 
 
+![question1]
+
+[question1]: images/question1.png "question1" { width:auto; max-width:90% }
+
+<br>
+  
+  
 We know that for Monte Carlo integration:
 ~ Equation
 \int_0^\infty g(x)f(x)dx = (1/N) \sum_{j=1}^{N} g(X_j) \text{where }  X_j \sim f
@@ -56,11 +62,14 @@ approximation.
 
 Here is the plot showing satisfaction of Chebyshev's inequality:
 
+<br>
+
 ![chebyshev1]
 
 
 [chebyshev1]: images/chebyshev1.png "chebyshev1" { width:auto; max-width:90% }
 
+<br>
 
 Notice that all values or error are coming out to be way smaller than $var_{f}(g)/(N* \delta)$
 
@@ -84,18 +93,24 @@ turns out to be 1 and it also is a decent match with the plot of original h(x).
 
 Here is h(x):
 
-![Screen Shot 2016-03-14 at 11.22.55 AM]
+<br>
 
-[Screen Shot 2016-03-14 at 11.22.55 AM]: images/Screen-Shot-2016-03-14-at-11.22.55-AM.png "Screen Shot 2016-03-14 at 11.22.55 AM" { width:auto; max-width:90% }
+![question1b]
+
+[question1b]: images/question1b.png "question1b" { width:auto; max-width:90% }
 
 
 <br>
 <br>
 
 And here is f(x) that we chose above:
-![Screen Shot 2016-03-14 at 10.40.09 AM]
 
-[Screen Shot 2016-03-14 at 10.40.09 AM]: images/Screen-Shot-2016-03-14-at-10.40.09-AM.png "Screen Shot 2016-03-14 at 10.40.09 AM" { width:auto; max-width:90% }
+<br>
+
+![question1b_2]
+
+[question1b_2]: images/question1b_2.png "question1b_2" { width:auto; max-width:90% }
+
 
 
 So we sample from this $f(x)$ after integrating and inverting the f(x) to get the
@@ -119,6 +134,8 @@ good job of approximating the integral.
 
 Here is the plot showing chebyshev inequality result after 1000 runs:
 
+<br>
+  
 ![chebyshev2]
 
 [chebyshev2]: images/chebyshev2.png "chebyshev2" { width:auto; max-width:90% }
@@ -156,6 +173,8 @@ be 0 since $ \sum Z_j $ happens to be lower than $m$ which is 70. After running
 the simulation 1000 times with $p = 0.3$, it becomes clear that we never reach
 the desired state of $Y>70$. Here is the plot after 1000 simulations: 
 
+<br>
+  
 ![randomwalk1]
 
 [randomwalk1]: images/randomwalk1.png "randomwalk1" { width:auto; max-width:90% }
@@ -169,6 +188,8 @@ Hence this is **not** a good choice for p.
 Lets take $p = 0.7$. After running the simulation 1000 times, we notice that 
 since m is very big, this biased random walk also does a terrible job. Here is 
 the plot:
+
+<br>
 
 ![randomwalk2]
 
@@ -184,6 +205,8 @@ only on 1 instance the final likelihood ratio is not zero and hence we know that
 So, lets take $p=0.78$. After running the simulation 1000 times, 
 following is the plot we get:
 
+<br>
+  
 ![randomwalk3]
 
 [randomwalk3]: images/randomwalk3.png "randomwalk3" { width:auto; max-width:90% }
@@ -196,6 +219,8 @@ instances hovers between 40 and 60.
 
 This number can be better seen if we take log values of likelihood ratio and plot
 the values again:
+
+<br>
 
 ![randomwalk4]
 
