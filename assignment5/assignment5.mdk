@@ -1,0 +1,42 @@
+Title         : Welcome
+Author        : You
+Logo          : True
+
+[TITLE]
+
+
+
+#8.13
+In this question we are given $X_i = [56, 101, 78, 67, 93, 87,64, 72, 80, 69]$ and $X_1....X_n$ 
+are identically independent distributed random variables. We are trying to estimate p which is given as
+$ P(a < \sum_{i=1}^{n}X_i/n - \mu < b)  $ where $\mu$ is the known mean of $X_i$
+
+In order to estimate p, we can use bootstrapping which will allow us to get an estimation of the distribution
+of means. This distribution then will basically allow us to see how many of the values fall under a and b
+(which are given as -5 and +5 respectively). That's the whole of point of bootstrapping. It allows us an
+estimation of what the unknown distribution could possibly look like.
+
+In order to do this, we sample from $X_i$ with replacement 10 times and then calculate the mean of these 10
+values. We then compare this value with given mean $\mu$ and check whether it falls under a and b,  or not. 
+
+Its important to keep in mind that a good estimation can only be achieved with large iterations of this process I 
+just described. So we do this over 10000 times to get a good estimation of what $p$ is. First, lets have a look
+at the histogram of the means which we get after doing the sampling with replacement process 10000 times:
+
+![means_histogram]
+
+[means_histogram]: images/means_histogram.png "means_histogram" { width:auto; max-width:90% }
+
+This curve is expected since N is very large(10000 in this case). Now each of these means was checked whether
+it fell under a and b or not. As it turned out, we had the $7643$ successes. This given us the probability
+p to be $7643/10000$ i.e. $0.76$
+
+So after bootstrapping, around 76% time, we get the mean falling withing the range of -5 and +5. 
+
+
+#8.15
+In this question, we are again told that $X_1, X_2...X_i$ is a sample from distribution 
+
+
+
+
