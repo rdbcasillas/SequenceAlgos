@@ -73,9 +73,34 @@ that is correlated or close to X. So we can take $U$ as Y because that is close 
 
 Now we know that the estimator Z of $\theta$ in case of control variate is $var(X + cY)$
 
-Now $c^*$ can be calculated as $-Cov(X,Y)^2/Var(Y). 
+Now $c^*$ can be calculated as $-Cov(X,Y)^2/Var(Y)$. 
 This turns out to be -0.209. Here X is $e^(U^2)$ while $Y$ is $U$.
 
 Now to get the estimator Z, we just add this value to the $Var(X)$. We get $Z = .029$. So we again notice
 that control variate helps us in variance reduction as this value is much smaller than Monte Carlo. 
 
+Now, lets compare the two variance reduction techniques with some simulation. For this we calculate 
+U(consisting of 100 values chosen between 0 and 1)  and calculate the variance for each of these 
+techniques. We also calculate the variance for normal monte carlo to see the drastic change. 
+This whole process is done 1000 times and then all these variance values are plotted to compare. 
+
+Following are the histograms that we see:
+
+1. Comparing variant reduction techniques with normal monte carlo estimation: 
+
+![comparison]
+
+[comparison]: images/comparison.png "comparison" { width:auto; max-width:90% }
+
+
+It can be clearly seen that both variance reduction techniques are performing very good compared to normal
+estimation. 
+
+2. Comparing antithetic and control variant reduction techniques:
+![comparison2]
+
+[comparison2]: images/comparison2.png "comparison2" { width:auto; max-width:90% }
+
+
+Although both do a great job, control variate technique seems to be working slightly better with this
+example. 
