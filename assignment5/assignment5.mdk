@@ -1,6 +1,6 @@
-Title         : Welcome
-Author        : You
-Logo          : True
+Title         : Assignment5
+Author        : Vatsal Mehra
+Logo          : False
 
 [TITLE]
 
@@ -22,9 +22,13 @@ values. We then compare this value with given mean $\mu$ and check whether it fa
 Its important to keep in mind that a good estimation can only be achieved with large iterations of this process I 
 just described. So we do this over 10000 times to get a good estimation of what $p$ is. First, lets have a look
 at the histogram of the means which we get after doing the sampling with replacement process 10000 times:
+
+</br>
+
 ![means_histogram]
 
 [means_histogram]: images/means_histogram.png "means_histogram" { width:auto; max-width:90% }
+
 
 This curve is expected since N is very large(10000 in this case). Now each of these means was checked whether
 it fell under a and b or not. As it turned out, we had the $7643$ successes. This given us the probability
@@ -41,15 +45,19 @@ In this case n=15 and $X_i = [5,4,9,6,21,17,11,20,7,10,21,15,13,16,8]$.
 
 We will again use bootstrap sampling and sample from $X_i$ with replacement. After sampling 15 values with
 replacement and calculating $S^2$ for each of those arrays 10k times, we get the following histogram:
+
+</br>
+
 ![variance_distribution]
 
 [variance_distribution]: images/variance_distribution.png "variance_distribution" { width:auto; max-width:90% }
 
 Again, we notice that after bootstrapping we get a Gaussian distribution of $S^2$ values. In order to 
-estimate the $Var(S^2)$, we just taken the variance of these values which turns out to be 56.13. 
+estimate the $Var(S^2)$(basically $Var(S_1^2, S_2^2....S_{10k}^{2})$), we 
+just taken the variance of these values which turns out to be 56.13. 
 
 
-#9.1
+#9.1 and 9.12
 
 We are given $\theta = \int_0^1 e^{x^2} dx$
 
@@ -76,31 +84,46 @@ Now we know that the estimator Z of $\theta$ in case of control variate is $var(
 Now $c^*$ can be calculated as $-Cov(X,Y)^2/Var(Y)$. 
 This turns out to be -0.209. Here X is $e^(U^2)$ while $Y$ is $U$.
 
-Now to get the estimator Z, we just add this value to the $Var(X)$. We get $Z = .029$. So we again notice
+Now to get the estimator Z, we use $Var(X) - Cov(X,Y)^2/Var(Y)$. We get $Z = .023$. So we again notice
 that control variate helps us in variance reduction as this value is much smaller than Monte Carlo. 
+
+When we calculate the antithetic estimate using same data, we get the variance
+to be .028 which is larger to the variance estimation we had with control
+variate method. But this is for just one loop so we can't say for sure
+which technique is performing better yet. We will have to do better simulation.
 
 Now, lets compare the two variance reduction techniques with some simulation. For this we calculate 
 U(consisting of 100 values chosen between 0 and 1)  and calculate the variance for each of these 
-techniques. We also calculate the variance for normal monte carlo to see the drastic change. 
-This whole process is done 1000 times and then all these variance values are plotted to compare. 
+using each of their respective equations that were used above. We also calculate the variance for normal monte carlo to 
+notice the performance of these techniques. This whole process is done 1000 times and then all these variance values are 
+plotted to compare. 
 
 Following are the histograms that we see:
 
 1. Comparing variant reduction techniques with normal monte carlo estimation: 
+
+</br>
 
 ![comparison]
 
 [comparison]: images/comparison.png "comparison" { width:auto; max-width:90% }
 
 
+
+
 It can be clearly seen that both variance reduction techniques are performing very good compared to normal
 estimation. 
 
 2. Comparing antithetic and control variant reduction techniques:
+
+</br>
+
 ![comparison2]
 
 [comparison2]: images/comparison2.png "comparison2" { width:auto; max-width:90% }
 
 
+
+
 Although both do a great job, control variate technique seems to be working slightly better with this
-example. 
+example since we seem to be getting more number of lower variances with it. 
