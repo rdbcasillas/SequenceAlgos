@@ -15,8 +15,8 @@ In order to create this lattice, we first randomly assign values of
 50 passes (where 1 pass is 225 sequential samples of $\sigma$) in order
 to reach an equilibrium state. The sampling is done by randomly 
 selecting one of the 225 sites and flipping the spin at that site. 
-The flip at $(i,j)$ is only accepted if acceptance probability is 
-higher than the uniform sampling (according to Metropolis algorithm).
+The flip at $(i,j)$ is accepted if acceptance probability is 
+higher than the value from uniform sampling (according to Metropolis algorithm).
 
 The acceptance probability is given by:
 ~ Equation
@@ -36,6 +36,8 @@ heat, susceptibility and number of stable spins for the new configuration.
 We do these calculations 200 times in order to 
 get a good estimate for each of these characteristics at a particular
 temperature. 
+
+#Energy
 
 Total energy is calculated using the formula
 
@@ -57,6 +59,7 @@ As one can see that after lowering temperatures, the energy of the
 dipole system decreases. At higher temperatures it is sort of same
 but then around 3 degree, it suddenly starts going down. 
 
+#Specific heat
 
 The Specific Heat is calculated using the formula:
 ~ Equation
@@ -71,7 +74,7 @@ Following is the plot that we get:
 
 [specificheat]: images/specificheat.png "specificheat" { width:auto; max-width:90% }
 
-
+#Magnetism
 
 Total magnetism is calculated using the formula:
 
@@ -98,7 +101,7 @@ As can be seen from the plot, the magnetism of the system decreases
 and at around 3 degree we see a drastic increase in magnetism.
 
 
-
+#Susceptibility
 
 For Susceptibility, we have:
 
@@ -118,7 +121,7 @@ We can see that around 3 degree, we see a sudden change in magnetism
 and that is nicely reflected in the susceptibility plot. Its important
 to note that this change is also reflected in the magnetism plot above.
 
-
+#Stable Spins
 
 
 Number of stable spins is calculated using $\langle{g(\tilde{T})}\rangle$ where:
@@ -143,7 +146,7 @@ stable spins increase. At cooler temperatures, the system seem to
 be much more stable. And this makes sense because at higher 
 temperatures one would expect more chaos in the dipole system.
 
-
+#Power Law
 
 In order to determine a power law, we have to find C, t and p such that:
 
