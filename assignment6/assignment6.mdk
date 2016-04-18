@@ -1,6 +1,6 @@
-Title         : Welcome
-Author        : You
-Logo          : True
+Title         : Assignment6
+Author        : Vatsal Mehra
+
 
 [TITLE]
 
@@ -47,6 +47,15 @@ Total energy is calculated using the formula
 So after plotting $\langle{U(\tilde{T})}\rangle$ = $\sum_{\sigma}U(\sigma)p(\sigma, \tilde{T})$ 
 we get the following graph:
 
+![energy]
+
+[energy]: images/energy.png "energy" { width:auto; max-width:90% }
+
+
+
+As one can see that with higher temperatures, the energy of the 
+dipole system increases.
+
 
 The Specific Heat is calculated using the formula:
 ~ Equation
@@ -54,6 +63,10 @@ The Specific Heat is calculated using the formula:
 1/\tilde{T^2}(\langle{U^{2}(\tilde{T})}\rangle - (\langle{U(\tilde{T})}\rangle)^2)
 
 ~
+
+Following is the plot that we get:
+
+
 
 
 Total magnetism is calculated using the formula:
@@ -65,7 +78,15 @@ Total magnetism is calculated using the formula:
 
 where $M(\sigma) = 1/L^2(\sum_{i=1}^L\sum_{j=1}^L\sigma_{i,j})$
 
+Following is the plot that we get for magnetism as a function of 
+temperature:
 
+![magnetism]
+
+[magnetism]: images/magnetism.png "magnetism" { width:100%; max-width:120% }
+
+
+As can be seen,  the magnetism of the system decreases when we 
 Its important to note that the term $p(\sigma, \tilde{T})$ highlights
 that the acceptance probability was calculated using Equation1 above.
 
@@ -76,7 +97,7 @@ For Susceptibility, we have:
 1/\tilde{T^2}(\langle{M^{2}(\tilde{T})}\rangle - (\langle{M(\tilde{T})}\rangle)^2)
 ~
 
-Number of stable spins is calculated using:
+Number of stable spins is calculated using $\langle{g(\tilde{T})}\rangle$ where:
 
 ~ Equation
 
@@ -86,6 +107,10 @@ g(\sigma) = \sum_{i,j}  \begin{cases}
 \end{cases}
 ~
 
-In order to 
+In order to determine a power law, we have to find C,t and p such that:
+
+$\langle{g(\tilde{T})}\rangle$ = $C(\tilde{T} - t)^p$
+
+If we look at the stable spin graph, we 
 
 
