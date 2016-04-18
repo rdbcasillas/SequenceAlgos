@@ -1,0 +1,61 @@
+Title         : Welcome
+Author        : You
+Logo          : True
+
+[TITLE]
+
+We are given a magnetic dipole sstem with dipoles array on a $15X15$
+lattice (signified by $\sigma$). We are going to plot the behavior of various characteristics
+associated with this system as a function of temperature. We want
+to observe what happens to system's energy, magnetism etc. when we
+change the temperature. 
+
+In order to create this lattice, we first randomly assign values of 
++1 and -1 to create an initial configuration. Once we have this, we do
+50 passes (where 1 pass is 225 sequential samples of $\sigma$) in order
+to reach an equilibrium state. The sampling is done by randomly 
+selecting one of the 225 sites and flipping the spin at that site. 
+The flip at $(i,j)$ is only accepted if acceptance probability is 
+higher than the uniform sampling (according to Metropolis algorithm).
+
+The acceptance probability is given by:
+~ Equation
+
+q(\sigma^`|\sigma) = exp(-\triangle{U}/k_{b}T)
+~
+
+where change in energy is given by:
+~ Equation
+
+-\triangle{U} = H\sigma_{i,j}^`- (2J)\sigma_{i,j}^`(\sigma_{i+1,j}^` + \sigma_{i-1,j}^` + \sigma_{i,j+1}^` + \sigma_{i,j-1}^`)
+~
+
+After repeating this step 225 steps, we have a new configuration
+at the same temperature. We calculate the energy, magnetism, specific
+heat, susceptibility and number of stable spins for the new configuration.
+We do these calculations 200 times in order to 
+get a good estimate for each of these characteristics at a particular
+temperature. 
+
+Total energy is calculated using the formula
+
+~ Equation
+  
+  U(\sigma) = -H\sum_{i=1}^L\sum_{j=1}^L\sigma_{i,j} - (J/2)\sum_{i=1}^L\sum_{j=1}^L\sigma_{i,j}(\sigma_{i+1,j} + \sigma_{i-1,j} + \sigma_{i,j+1} + \sigma_{i,j-1})
+~
+
+So after plotting $\langle{U(\tilde{T})}\rangle$ = $\sum_{\sigma}U(\sigma)p(\sigma, \tilde{T})$ 
+we get the following graph:
+
+
+The Specific Heat is calculated using the formula:
+~ Equation
+
+1/\tilde{T^2}(\langle{U^{2}(\tilde{T})}\rangle - (\langle{U(\tilde{T})}\rangle)^2)
+
+~
+
+
+Total magnetism is calculated using the formula:
+
+
