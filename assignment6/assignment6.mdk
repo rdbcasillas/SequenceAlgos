@@ -4,7 +4,7 @@ Author        : Vatsal Mehra
 
 [TITLE]
 
-We are given a magnetic dipole sstem with dipoles array on a $15X15$
+We are given a magnetic dipole system with dipoles arrayed on a $15X15$
 lattice (signified by $\sigma$). We are going to plot the behavior of various characteristics
 associated with this system as a function of temperature. We want
 to observe what happens to system's energy, magnetism etc. when we
@@ -53,8 +53,9 @@ we get the following graph:
 
 
 
-As one can see that with higher temperatures, the energy of the 
-dipole system increases.
+As one can see that after lowering temperatures, the energy of the 
+dipole system decreases. At higher temperatures it is sort of same
+but then around 3 degree, it suddenly starts going down. 
 
 
 The Specific Heat is calculated using the formula:
@@ -66,6 +67,9 @@ The Specific Heat is calculated using the formula:
 
 Following is the plot that we get:
 
+![specificheat]
+
+[specificheat]: images/specificheat.png "specificheat" { width:auto; max-width:90% }
 
 
 
@@ -86,9 +90,15 @@ temperature:
 [magnetism]: images/magnetism.png "magnetism" { width:100%; max-width:120% }
 
 
-As can be seen,  the magnetism of the system decreases when we 
+ 
 Its important to note that the term $p(\sigma, \tilde{T})$ highlights
 that the acceptance probability was calculated using Equation1 above.
+
+As can be seen from the plot, the magnetism of the system decreases 
+and at around 3 degree we see a drastic increase in magnetism.
+
+
+
 
 For Susceptibility, we have:
 
@@ -96,6 +106,20 @@ For Susceptibility, we have:
 
 1/\tilde{T^2}(\langle{M^{2}(\tilde{T})}\rangle - (\langle{M(\tilde{T})}\rangle)^2)
 ~
+
+When we plot this, we get :
+
+![susceptibility]
+
+[susceptibility]: images/susceptibility.png "susceptibility" { width:auto; max-width:90% }
+
+
+We can see that around 3 degree, we see a sudden change in magnetism
+and that is nicely reflected in the susceptibility plot. Its important
+to note that this change is also reflected in the magnetism plot above.
+
+
+
 
 Number of stable spins is calculated using $\langle{g(\tilde{T})}\rangle$ where:
 
@@ -107,10 +131,48 @@ g(\sigma) = \sum_{i,j}  \begin{cases}
 \end{cases}
 ~
 
-In order to determine a power law, we have to find C,t and p such that:
+For the stable spin , we get the following plot:
+
+![stablespins]
+
+[stablespins]: images/stablespins.png "stablespins" { width:auto; max-width:90% }
+
+
+We can notice that when we decrease the temperature, the number of
+stable spins increase. At cooler temperatures, the system seem to 
+be much more stable. And this makes sense because at higher 
+temperatures one would expect more chaos in the dipole system.
+
+
+
+In order to determine a power law, we have to find C, t and p such that:
 
 $\langle{g(\tilde{T})}\rangle$ = $C(\tilde{T} - t)^p$
 
-If we look at the stable spin graph, we 
+
+Since we are trying to come up with a plot that matches stable spin
+plot, we can use the already known stable spin values to come up with the 
+values of C, t and p so that the new plot matches the stable spin plot
+
+After solving above algebric equation, I was able to get the following
+plot:
+
+![powerlaw]
+
+[powerlaw]: images/powerlaw.png "powerlaw" { width:auto; max-width:90% }
+
+The values that allowed me to plot this were:
+$C = -64, p=1/5, t=2.8$
+
+But I had to add a constant of +150 to the equation in order to get the right
+right temperature for the corresponding spins. 
+
+
+As can be seen that with this equations the temperature where
+transition happens has shifted a bit. 
+
+
+
+
 
 
