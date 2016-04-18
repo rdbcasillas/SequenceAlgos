@@ -58,4 +58,34 @@ The Specific Heat is calculated using the formula:
 
 Total magnetism is calculated using the formula:
 
+~ Equation
+
+\langle{M(\tilde{T})}\rangle = \sum_{\sigma}M(\sigma)p(\sigma, \tilde{T})
+~
+
+where $M(\sigma) = 1/L^2(\sum_{i=1}^L\sum_{j=1}^L\sigma_{i,j})$
+
+
+Its important to note that the term $p(\sigma, \tilde{T})$ highlights
+that the acceptance probability was calculated using Equation1 above.
+
+For Susceptibility, we have:
+
+~ Equation
+
+1/\tilde{T^2}(\langle{M^{2}(\tilde{T})}\rangle - (\langle{M(\tilde{T})}\rangle)^2)
+~
+
+Number of stable spins is calculated using:
+
+~ Equation
+
+g(\sigma) = \sum_{i,j}  \begin{cases}
+1 & \text{if } \sigma_{i,j}^` = \sigma_{i+1,j}^` = \sigma_{i-1,j}^` = \sigma_{i,j+1}^` = \sigma_{i,j-1}^` \\
+0 & \text{otherwise }\\
+\end{cases}
+~
+
+In order to 
+
 
