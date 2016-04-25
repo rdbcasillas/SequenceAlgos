@@ -1,0 +1,51 @@
+Title         : Assignment7
+Author        : Vatsal Mehra
+
+
+[TITLE]
+
+# 
+We are given that $X_i,i=1,2,3$ as independent exponentials with mean
+$1$. We are told to estimate 
+$E[ X_1 + 2X_2 + 3X_3 | X_1 + 2X_2 + 3X_3 > 15]$ and 
+E[ X1 + 2X2 + 3X3 | X1 + 2X2+ 3X3  < 1 ]
+
+In order to do this, we first 
+
+
+#2
+With Euler Maruyama method, we have:
+~ Equation
+Y_{n+1} = Y_n + a(t_n,Y_n)\triangle{t} + b(t_n, Y_n)\triangle(W_n)
+
+~
+
+Exact solution path is given by 
+~ Equation
+X_t = X_o(exp((a-b^2/2)t) + bW_t)
+
+~
+
+We calculate these solutions using the time steps of size 
+$\triangle{t} = 2^{-3}, 2^{-4}, 2^{-5}, 2^{-6}$
+
+In this problem $a=1.5, b=0.1 and X_o = 1$
+
+With Huen method, we have:
+
+~ Equation
+\tilde{Y_{n+1}} = Y_n + a(t_n,Y_n)\triangle{t} + b(t_n, Y_n)\triangle(W_n)
+~
+and
+~Equation
+Y_{n+1} = Y_n + 1/2(a(t_n,Y_n) + a(t_n,\tilde{Y_{n+1}}))\triangle{t} + 1/2(b(t_n, Y_n) + b(t_n,\tilde{Y_{n+1}}))\triangle(W_n)
+
+~
+
+We generate 100 simulations for each of the time step size given and
+calculate both the numerical solutions and the exact solution.
+
+Since $E^2[\triangle{W_n}] = \triangle{t}$ and $E[\triangle{W_n}] = 0$,
+our $\triangle{W_n}$ becomes $sqrt(\triangle{t}*U)$.
+
+For error, we are given, $\epsilon = 1/N(\sum_{j=1}^{N}|X_{T}^j - Y_{T}^{j}|)$
