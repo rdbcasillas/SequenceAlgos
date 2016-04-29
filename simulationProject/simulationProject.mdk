@@ -1,0 +1,42 @@
+Title         : Revisiting Levy flight search patterns of wandering albatrosses
+Author        : **Katie Barry and Vatsal Mehra**
+Logo          : True
+
+[TITLE]
+</br>
+
+In this project, we will be trying to replicate the findings from the 2007 paper 
+“Revisiting Levy flight search patterns of wandering albatrosses, bumblebees and deer”. 
+We will be focusing only on the albatrosses’ flight patterns. In a 1996 paper, some of 
+the authors of the paper in focus, tried to capture the foraging patterns of wandering
+albatrosses. At the time, they concluded that these birds perform Levy flights when 
+searching for the prey in the ocean. More specifically, they concluded that the flight
+durations follow a power law distribution. In the new analysis though, with the help of better data
+from 2004, the authors show that the original analysis was incorrect and the flight 
+durations seem to follow a shifted gamma distribution given by probability density 
+function :
+~ Equation
+f(t) = r^s(y^{s-1}e^{-ry})/\Gamma(s)
+
+~
+
+where $y = t-1/120$(t in hours), $s$ is the shape parameter and $r$ is the rate 
+parameter. 
+
+Our goal in this project is to simulate this distribution and validate that its a good
+model for foraging behavior. Briefly, the data consists of wet/dry readings (each 10sec apart) from every bird
+that highlights the total flight duration in search of prey. Due to the unavailability of raw data used in the experiment, 
+we will be randomly generating values from a gamma distribution in order to create pseudo data
+data. We will be then testing our 
+model to see how well it fits. We will be using maximum likelihood estimation(MLE) in order 
+to come up with the parameter values (r and s mentioned above) that maximize the multinomial
+log-likelihood function (derived by authors) that looks like:
+~ Equation
+\begin{aligned}
+l(\theta|r) = \sum_{j=1}^{J}d_jlog\lbrace\int_{10(j-1)}^{10(j+1)}f(x;\theta)dx - \int_{10(j-1)}^{10(j)}(j-x/10)f(x;\theta)dx \\
+                - \int_{10(j)}^{10(j+1)}f(x;\theta)dx)\rbrace - nlog(1-P(R = 3|\theta))
+\end{aligned}
+
+~
+We will also be using the G-test (likelihood ratio test) in order to test for goodness
+of fit. The ideal scenario would be to obtain at least 95% Confidence Interval. 
