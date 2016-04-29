@@ -24,11 +24,10 @@ where $y = t-1/120$(t in hours), $s$ is the shape parameter and $r$ is the rate
 parameter. 
 
 Our goal in this project is to simulate this distribution and validate that its a good
-model for foraging behavior. Briefly, the data consists of wet/dry readings (each 10sec apart) from every bird
+model for simulating foraging behavior. Briefly, the data consists of wet/dry readings (each 10sec apart) from every bird
 that highlights the total flight duration in search of prey. Due to the unavailability of raw data used in the experiment, 
 we will be randomly generating values from a gamma distribution in order to create pseudo data
-data. We will be then testing our 
-model to see how well it fits. We will be using maximum likelihood estimation(MLE) in order 
+data. In order to test how well the proposed model fits, we will be using maximum likelihood estimation(MLE) in order 
 to come up with the parameter values (r and s mentioned above) that maximize the multinomial
 log-likelihood function (derived by authors) that looks like:
 ~ Equation
@@ -38,5 +37,10 @@ l(\theta|r) = \sum_{j=1}^{J}d_jlog\lbrace\int_{10(j-1)}^{10(j+1)}f(x;\theta)dx -
 \end{aligned}
 
 ~
+
+where $f(x,\theta)$ is the pdf of flight durations with $x$ being the random variable
+representing flight durations and $\theta = (r,s)$ the vector of parameters. The total
+number of flights (n) is 1416 while $j$ is the record number (consecutive dry recordings).
+
 We will also be using the G-test (likelihood ratio test) in order to test for goodness
-of fit. The ideal scenario would be to obtain at least 95% Confidence Interval. 
+of fit. The ideal scenario would be to obtain values within 95% Confidence Interval. 
