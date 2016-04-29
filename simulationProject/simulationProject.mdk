@@ -1,5 +1,5 @@
 Title         : Revisiting Levy flight search patterns of wandering albatrosses
-Author        : **Katie Barry and Vatsal Mehra**
+Author        : **Katherine Barry and Vatsal Mehra**
 Logo          : True
 
 [TITLE]
@@ -7,11 +7,11 @@ Logo          : True
 
 In this project, we will be trying to replicate the findings from the 2007 paper 
 “Revisiting Levy flight search patterns of wandering albatrosses, bumblebees and deer”. 
-We will be focusing only on the albatrosses’ flight patterns. In a 1996 paper, some of 
-the authors of the paper in focus, tried to capture the foraging patterns of wandering
+We will be focusing only on the albatrosses’ flight patterns. In a 1996 study, authors of 
+the paper in focus, tried to capture the foraging patterns of wandering
 albatrosses. At the time, they concluded that these birds perform Levy flights when 
 searching for the prey in the ocean. More specifically, they concluded that the flight
-durations follow a power law distribution. In the new analysis though, with the help of better data
+durations follow a power law distribution. In the new analysis however, with the help of better data
 from 2004, the authors show that the original analysis was incorrect and the flight 
 durations seem to follow a shifted gamma distribution given by probability density 
 function :
@@ -25,9 +25,9 @@ parameter.
 
 Our goal in this project is to simulate this distribution and validate that its a good
 model for simulating foraging behavior. Briefly, the data consists of wet/dry readings (each 10sec apart) from every bird
-that highlights the total flight duration in search of prey. Due to the unavailability of raw data used in the experiment, 
-we will be randomly generating values from a gamma distribution in order to create pseudo data
-data. In order to test how well the proposed model fits, we will be using maximum likelihood estimation(MLE) in order 
+that highlights the total flight duration in search of prey. Due to the unavailability of raw data, 
+we will be randomly generating values from a gamma distribution in order to create pseudo 
+data. In order to test how well the proposed model fits, we will be using maximum likelihood estimation(MLE)  
 to come up with the parameter values (r and s mentioned above) that maximize the multinomial
 log-likelihood function (derived by authors) that looks like:
 ~ Equation
