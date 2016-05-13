@@ -4,7 +4,7 @@ Logo          : True
 
 [TITLE]
 
-#Background
+#Background 
 In 1992 a study of the foraging behavior of wandering albatrosses was 
 performed on Bird Island. The study consisted of five birds performing 
 19 separate foraging trips and a total of 363 flights. Throughout the 
@@ -116,9 +116,9 @@ us to calculate likelihood and estimate parameters.
 
 ##Estimating parameters
 We wanted to verify whether with the data that we simulated, we could 
-get similar values to what the authors predicted which were 0.41 for the 
-rate parameter (r) and 0.31 for the shape parameter (s). We used the
-statsmodel package for python to create a custom function that allowed us
+get similar values to what the authors predicted which were $0.41h^1$ for the 
+rate parameter $r$ (this translates to .00011 when the unit is in seconds) and 
+0.31 for the shape parameter (s) . We used the statsmodel package for python to create a custom function that allowed us
 to use the multinomial log-likelihood function equation for optimization 
 and predicting parameters. We created a Gamma class which basically 
 inherited a helper class (provided by the package) called 
@@ -128,18 +128,73 @@ like “fit” and “loglike” that we can customize to suit our own equation
 
 
 
-
-
-
-
-
-
-
-
-
 #Results and Discussion
 
 After simulating the shifted gamma distribution to sample flight time
-values, we had the following plots:
+values, we had the following plot showing the pdf:
+
+![simulation_pdf]
+
+[simulation_pdf]: images/simulation_pdf.png "simulation_pdf" { width:auto; max-width:90% }
+
+
+After randomly sampling from this distribution and converting the flight
+times into seconds, we had the following histogram for our flight time 
+values:
+
+![simulation_histo]
+
+[simulation_histo]: images/simulation_histo.png "simulation_histo" { width:auto; max-width:90% }
+
+
+We compared our pseudo data distribution and as expected it looked quite
+similar to original data's distribution. 
+
+Next, we had to calculate the likelihood function. After writing different
+functions for different integrals involved in the Equation 2 above and 
+solving for likelihood function's value at author's predicted values,
+we decided to plot the behavior of our function over varying values of $r$
+and $s$ which are the parameters involved in the log likelihood function.
+This is because ultimately we wanted to check whether we can approximate 
+author's conclusion that the function is maximum at $r=0.0001s^1$ and 
+$s=0.31$.
+
+Here is the plot showing the behavior of log likelihood function with 
+respect to the rate parameter $r$ with constant $s = 0.31$:
+
+![loglikelihood_rate]
+
+[loglikelihood_rate]: images/loglikelihood_rate.png "loglikelihood_rate" { width:auto; max-width:90% }
+
+
+Following is the plot showing behavior of log-likelihood function with 
+respect to the shape parameter $s$ with constant $r=0.00011s^{-1}$:
+
+![loglikelihood_shape]
+
+[loglikelihood_shape]: images/loglikelihood_shape.png "loglikelihood_shape" { width:auto; max-width:90% }
+
+
+As can be noticed from these 2 plots, the maximum value of likelihood 
+function is reached with $r$ and $s$ being somewhat close to what authors 
+predicted i.e. $0.00011s^{-1}$ and $0.31$ respectively. 
+
+In order to know the actual predicted values with our pseudo data, we 
+created used the help of GenericLikelihoodModel class by inherting its 
+functions that allow us to fit the data and predict parameters. 
+
+After doing so, we received the following values: 
+$r: 0.0002s^{-1}$ with std. error $2.36e-07$ and
+$s: 0.77$ with std. error $.001$
+
+So the value of $r$ predicted is almost exactly what authors predicted but
+the values of $s$ is slightly higher. 
+
+
+
+
+
+
+
 
 
