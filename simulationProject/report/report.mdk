@@ -1,5 +1,5 @@
-Title         : Welcome
-Author        : You
+Title         : Revisiting Le ́vy flight search patterns of wandering albatrosses
+Author        : Katie Barry & Vatsal Mehra
 Logo          : True
 
 [TITLE]
@@ -95,10 +95,11 @@ number of times there were 5 consecutive dry readings. $f(x;\theta)$ is the
 same function as explained above, except that the flight time argument $x$,
 is in seconds. 
 
+
 Since the authors wanted to test whether the data comes from the shifted
 gamma distribution, they had to develop a statistical analysis. They 
-wanted to find the maximum likelihood estimates (MLE) for r and s. In order
-to do that they had to maximize log likelihood function which they defined by:
+wanted to find the maximum likelihood estimates (MLE) for r and s. So they 
+had to maximize log likelihood function which they defined by:
 
 ~ Equation
 l(\theta|r) = \sum_{i=1}^{n}log[P(r_i|\theta)]
@@ -111,7 +112,13 @@ probability of getting a single record $r_i$ if the parameters
 are given by $\theta$ for the pdf. 
 
 They then went ahead and derived the Equation 2 which was finally used by
-us to calculate likelihood and estimate parameters.   
+us to calculate likelihood and estimate parameters. And as can be seen
+from Eq2, the limits of the integrals highlight the possible ranges where
+the actual flight time could lie, given a record value. For instance, if the record
+says 5, then the actual flight time could lie anywhere between 40 to 60 seconds
+depending on whether the bird took off just before or just after the first
+dry reading and whether it landed just after or just before the last 
+wet reading. 
 
 
 ##Estimating parameters
@@ -187,8 +194,21 @@ After doing so, we received the following values:
 $r: 0.0002s^{-1}$ with std. error $2.36e-07$ and
 $s: 0.77$ with std. error $.001$
 
+Our function takes initial starting parameters and irrespective of how
+we changed those, the optimization always predicted same values as above.
+
 So the value of $r$ predicted is almost exactly what authors predicted but
 the values of $s$ is slightly higher. 
+
+The maximum likelihood value using these predicted parameters is given
+as $-1.3604e+07$ by our estimator. 
+
+#Conclusion
+We successfully simulated the multinomial log- likelihood function using 
+pseudo data that was sampled from shifted gamma distribution. We were
+also able to predict values of rate and shape parameters very close to 
+what authors predicted although our predicted shape parameter was slightly 
+higher which could be due to the lack of actual data. 
 
 
 
