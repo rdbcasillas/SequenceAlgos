@@ -87,8 +87,6 @@ r^s((x-30)^{s-1}e^{-r(x-30)})/\Gamma(s) \text{ for }x > 30\\
 \end{cases}
 
 ~
-(explain what’s going on inside the equation and briefly explain how authors arrived at it. Most of the content will happen here I guess...)
-
 
 $j$ represents a record i.e. number of
 consecutive dry readings. $d_j$ represents the total number of instances
@@ -121,6 +119,9 @@ says 5, then the actual flight time could lie anywhere between 40 to 60 seconds
 depending on whether the bird took off just before or just after the first
 dry reading and whether it landed just after or just before the last 
 wet reading. 
+
+With the pseudo data, we integrated the equation to get our maximum 
+likelihood values and predict parameters (more in Results section). 
 
 
 ##Estimating parameters
