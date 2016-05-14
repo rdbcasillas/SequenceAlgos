@@ -2,6 +2,7 @@ Title         : Revisiting Le ́vy flight search patterns of wandering albatross
 Author        : Katie Barry & Vatsal Mehra
 Logo          : True
 
+
 [TITLE]
 
 #Background 
@@ -20,7 +21,7 @@ random walks with step lengths coming from probability distributions
 with heavy tail power-law tails. They can be represented as clusters 
 of short steps connected by rare long steps. 
   
-In 2004 new data was obtained from 20 wandering albatrosses fitted with 
+But then in 2004 new data was obtained from 20 wandering albatrosses fitted with 
 an immersion logger and a GPS device. The GPS was used to monitor when 
 the birds left the island, but the data provided was too inconsistent to
 provide the specific location of the birds throughout the study. From 
@@ -29,6 +30,7 @@ data it was ascertained that flights ≥ 1h did not come from the power law
 function previously mentioned, but in fact, came from the shifted gamma
 distribution. The shifted gamma distribution is given by the probability
 density function:
+
 ~ Equation
 f(y) = r^s(y^{s-1}e^{-ry})/\Gamma(s)
 
@@ -140,18 +142,24 @@ like “fit” and “loglike” that we can customize to suit our own equation
 After simulating the shifted gamma distribution to sample flight time
 values, we had the following plot showing the pdf:
 
+</br>
+
 ![simulation_pdf]
 
 [simulation_pdf]: images/simulation_pdf.png "simulation_pdf" { width:auto; max-width:90% }
 
+</br>
 
 After randomly sampling from this distribution and converting the flight
 times into seconds, we had the following histogram for our flight time 
 values:
 
+</br>
+
 ![simulation_histo]
 
 [simulation_histo]: images/simulation_histo.png "simulation_histo" { width:auto; max-width:90% }
+
 
 
 We compared our pseudo data distribution and as expected it looked quite
@@ -169,6 +177,8 @@ $s=0.31$.
 Here is the plot showing the behavior of log likelihood function with 
 respect to the rate parameter $r$ with constant $s = 0.31$:
 
+</br>
+
 ![loglikelihood_rate]
 
 [loglikelihood_rate]: images/loglikelihood_rate.png "loglikelihood_rate" { width:auto; max-width:90% }
@@ -177,10 +187,13 @@ respect to the rate parameter $r$ with constant $s = 0.31$:
 Following is the plot showing behavior of log-likelihood function with 
 respect to the shape parameter $s$ with constant $r=0.00011s^{-1}$:
 
+</br>
+
 ![loglikelihood_shape]
 
 [loglikelihood_shape]: images/loglikelihood_shape.png "loglikelihood_shape" { width:auto; max-width:90% }
 
+</br>
 
 As can be noticed from these 2 plots, the maximum value of likelihood 
 function is reached with $r$ and $s$ being somewhat close to what authors 
@@ -214,7 +227,144 @@ higher which could be due to the lack of actual data.
 
 
 
+#Appendix (Python code)
+```Python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.special import gamma
 
+###Simulate the shifted gamma pdf
+
+s = 0.31
+r = 0.41
+
+raw_time = np.linspace(0.000001,15,200)
+
+shifted_gamma = ((r**s)*np.exp(-r*(raw_time-1.0/120))*(raw_time-1.0/120)**(s-1))/gamma(s)
+
+plt.xlim(0,15)
+plt.xlabel("Flight times (in hours)")
+plt.suptitle("PDF of $r^s(y^{s-1}e^{-ry})/\Gamma(s)$ with $r=0.41h^{-1}, s=0.31$", fontsize=16)
+plt.plot(raw_time, shifted_gamma, lw=3)
+
+###Normalize probabilties
+
+probabilities= shifted_gamma
+prob = sum(probabilities) 
+c = (1.0)/prob 
+probabilities = map(lambda x: c*x, probabilities)
+flight_times = np.random.choice(raw_time, 1400, p=probabilities)
+
+
+###Convert flight times into seconds
+flight_times_sec = flight_times*3600
+sorted_times = np.sort(flight_times_sec)
+
+###Plot histogram of pseudo data
+plt.xlabel("Flight times (in seconds)", fontsize=16)
+plt.ylabel("Total number of flights", fontsize=16)
+plt.suptitle("Pseudo data generated after sampling from PDF", fontsize=18)
+plt.hist(sorted_times)
+
+###Convert flight times into records
+integer_times = [np.int(i)/10 for i in sorted_times]
+
+
+
+###Function definitions that go into the integrals
+def shift_gamma(x,rl,sl):
+    return ((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+def shift_gamma2(x,j,rl,sl):
+    return (j-(x/10))*((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+def shift_gamma3(x,j,rl,sl):
+    return (x/10-j)*((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+def shift_gamma4(x,j,rl,sl):
+    return x*((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+
+N = len(integer_times)
+
+
+###Log-likelihood function
+def calc_likelihood(integer_times,r,s):
+    sum_multinomial = []
+    for j in integer_times:
+
+        sum_multinomial.append(np.log((integrate.quad(shift_gamma,10*(j-1),10*(j+1),args=(r,s))[0] - 
+                            integrate.quad(shift_gamma2,10*(j-1),10*(j),args=(j,r,s))[0] - 
+                            integrate.quad(shift_gamma3,10*(j),10*(j+1),args=(j,r,s))[0])))
+
+
+    term_subtract = np.log(1- (4*integrate.quad(shift_gamma,30,40,args=(r,s))[0] - 
+                                              0.1*integrate.quad(shift_gamma4,30,40,args=(j,r,s)[0]))
+    #print(np.sum(sum_multinomial))
+    #print(term_subtract)
+    return N*(np.sum(sum_multinomial) - term_subtract)
+
+
+###Define values of r & s to observe the behavior of function with respect to them
+r_array = np.linspace(0.1/3600,1.3/3600,100)
+s_array = np.linspace(0.1,1.9,100)
+
+likelihood_wrt_r = []
+likelihood_wrt_s = []
+
+###Calculate funtion's behavior based on r and s values
+for s_gl in s_array:
+    likelihood_wrt_s.append(calc_likelihood(integer_times, 0.41/3600, s_gl))
+    
+for r_gl in s_array:
+    likelihood_wrt_r.append(calc_likelihood(integer_times, r_gl, 0.31))
+
+
+###Plot behavior
+plt.xlabel("shape parameter $s$",fontsize=16)
+plt.ylabel("$Log-likelihood: l(\ttheta|r)$",fontsize=16)
+plt.suptitle("Behavior of likelihood function with respect to shape parameter", fontsize=14)
+plt.plot(s_array, likelihood_values)
+
+plt.xlabel("rate parameter $r$",fontsize=16)
+plt.ylabel("$Log-likelihood: l(\ttheta|r)$",fontsize=16)
+plt.suptitle("Behavior of likelihood function with respect to rate parameter", fontsize=14)
+plt.plot(r_array, likelihood_values)
+
+
+
+###Prediction of parameter values using statsmodel's GenericLikelihoodModel
+from statsmodels.base.model import GenericLikelihoodModel
+class Gamma(GenericLikelihoodModel):
+    
+    
+    def __init__(self,endog):
+         super(Gamma, self).__init__(endog)
+        
+    def loglike(self, params):
+        rp = params[0]
+        sp = params[1]
+        return calc_likelihood(self.endog, rp, sp)
+        
+    def fit(self, start_params=np.array([0.11/3600,0.51])):
+        return super(Gamma, self).fit(start_params=start_params)
+        
+
+model = Gamma(integer_times)
+results = model.fit()
+
+
+###Get parameters and print other info like std error and 95% CI
+r1, s1 = results.params
+print(r1, s1)
+results.df_model = len(np.array([0.41/3600,0.31]))
+results.df_resid = len(integer_times) - len(params)
+results.df_resid = len(integer_times) - len(results.params)
+results.summary()
+
+  
+ ```
+    
 
 
 
