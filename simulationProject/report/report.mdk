@@ -1,6 +1,6 @@
 Title         : Revisiting Le ́vy flight search patterns of wandering albatrosses
 Author        : Katie Barry & Vatsal Mehra
-Logo          : True
+
 
 
 [TITLE]
@@ -183,7 +183,6 @@ respect to the rate parameter $r$ with constant $s = 0.31$:
 
 [loglikelihood_rate]: images/loglikelihood_rate.png "loglikelihood_rate" { width:auto; max-width:90% }
 
-
 Following is the plot showing behavior of log-likelihood function with 
 respect to the shape parameter $s$ with constant $r=0.00011s^{-1}$:
 
@@ -221,7 +220,12 @@ We successfully simulated the multinomial log- likelihood function using
 pseudo data that was sampled from shifted gamma distribution. We were
 also able to predict values of rate and shape parameters very close to 
 what authors predicted although our predicted shape parameter was slightly 
-higher which could be due to the lack of actual data. 
+higher which could be due to the lack of actual data. The only way to 
+truly replicate findings of the authors would be to get new set of immeersion
+logger data from the albatrosses. But from the data they had collected 
+in 2004, we can conclude that the flight times do follow shifted gamma distribution.
+
+
 
 
 
