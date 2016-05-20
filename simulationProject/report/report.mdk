@@ -1,0 +1,375 @@
+Title         : Revisiting Le ́vy flight search patterns of wandering albatrosses
+Author        : Katie Barry & Vatsal Mehra
+
+
+
+[TITLE]
+
+#Background 
+In 1992 a study of the foraging behavior of wandering albatrosses was 
+performed on Bird Island. The study consisted of five birds performing 
+19 separate foraging trips and a total of 363 flights. Throughout the 
+study each bird had an immersion logger attached to one of its legs to 
+record the proportion of each hour spent on the sea surface. The flight
+durations were calculated as consecutive hours for which a bird remained
+dry. They were assumed to be indicative of the distances the birds flew
+between feedings. The flight durations were pooled and plotted on a 
+log-log histogram, which gave a straight line with a slope of 
+approximately 2. This implies that the albatrosses were performing 
+Lévy flights with a probability distribution $f(t) ~ t_{-2}$.Lévy flights are 
+random walks with step lengths coming from probability distributions 
+with heavy tail power-law tails. They can be represented as clusters 
+of short steps connected by rare long steps. 
+  
+But then in 2004 new data was obtained from 20 wandering albatrosses fitted with 
+an immersion logger and a GPS device. The GPS was used to monitor when 
+the birds left the island, but the data provided was too inconsistent to
+provide the specific location of the birds throughout the study. From 
+this study a total of 1416 flight durations were recorded. From this new 
+data it was ascertained that flights ≥ 1h did not come from the power law
+function previously mentioned, but in fact, came from the shifted gamma
+distribution. The shifted gamma distribution is given by the probability
+density function:
+
+~ Equation
+f(y) = r^s(y^{s-1}e^{-ry})/\Gamma(s)
+
+~
+
+where $y=t-1/120$ accounts for the 30 s period before the bird searches 
+for new food sources, $r=0.41 h_{-1}$ is the rate parameter, and $s=0.31$ is the 
+shape parameter. This probability density function is valid for flights $>30s$.
+It assumes 30 s is the minimum time after takeoff for a bird to start 
+searching for new food sources, and it excludes instances where a bird may
+have lifted its foot out of the water or abandoned take off. For shorter flights f(t)=0. 
+Upon discovering that the new flight data is consistent with coming from the shifted gamma distribution, the data from 1992 was reevaluated. The old data proved to be inaccurate because it included the time during which the birds were sitting on the nest as part of the initial and final flight duration time. Once the initial and final dry sequences were eliminated there was no longer any flight durations in the two largest bins. The longest flight in the 1992 data went from 99 h (unadjusted) to only 20 h (adjusted). Additionally, original initial flight durations of 44 h, 69 h, 26 h, 67 h, and 23 h actually represent flight records of 4 h, 3 h, 1 h, <1 h, and <1 h, respectively. As a result, the data no longer spans two orders of magnitude, and the points clearly lie on a curve as opposed to a straight line. 
+
+
+#Methods
+##Pseudo Data
+Since we could not find the original data that the authors used for the 
+study, we decided to create pseudo data. In order to do this, we first 
+simulated the shifted gamma distribution using the parameter values that
+the authors originally estimated using maximum likelihood estimate (MLE). 
+This density function provided us with a distribution to sample from 
+(Figure1). We proceeded by randomly sampling 1400 values from it to match 
+the number of albatross flights in the 2004 study. We validated our 
+sampling by plotting these values over a histogram (Figure2).
+
+We next converted the sampled values to resemble the actual records. 
+This is because records are what authors used in their multinomial 
+log-likelihood function. To do this, we simply converted the randomly 
+sampled values into seconds and then factored it by 10 and took the 
+nearest integer value. This gave us a rough estimation of what records 
+would have looked like in the original data. A record highlights the 
+number of consecutive dry readings recorded by the logger. Since the 
+logger records dry reading every 10 seconds, a record of 5 would mean 
+the bird was in the dry state for approximately 40 to 50 seconds.
+ 
+
+##Multinomial log-likelihood function
+In order to calculate the log-likelihood function, we used the equation 
+that the authors derived: 
+
+~ Equation
+\sum_{j=1}^{J}d_jlog\lbrace\int_{10(j-1)}^{10(j+1)}f(x;\theta)dx - \int_{10(j-1)}^{10(j)}(j-x/10)f(x;\theta)dx - \\
+\int_{10(j)}^{10(j+1)}(x/10-j)f(x;\theta)dx)\rbrace - nlog(1-P(R = 3|\theta))
+
+~
+
+where 
+
+~ Equation
+f(x;\theta) = 
+\begin{cases}
+r^s((x-30)^{s-1}e^{-r(x-30)})/\Gamma(s) \text{ for }x > 30\\
+0 \text{ for }x <= 30\\
+\end{cases}
+
+~
+
+$j$ represents a record i.e. number of
+consecutive dry readings. $d_j$ represents the total number of instances
+for a particular record. So for instance, if $j = 5$, $d_j$ represents the
+number of times there were 5 consecutive dry readings. $f(x;\theta)$ is the
+same function as explained above, except that the flight time argument $x$,
+is in seconds. 
+
+
+Since the authors wanted to test whether the data comes from the shifted
+gamma distribution, they had to develop a statistical analysis. They 
+wanted to find the maximum likelihood estimates (MLE) for r and s. So they 
+had to maximize log likelihood function which they defined by:
+
+~ Equation
+l(\theta|r) = \sum_{i=1}^{n}log[P(r_i|\theta)]
+
+~ 
+
+where $L(\theta|r)$ is the likelihood function 
+while $n=1416$ was the total number of flights. $P(r_i|\theta)$ was the
+probability of getting a single record $r_i$ if the parameters
+are given by $\theta$ for the pdf. 
+
+They then went ahead and derived the Equation 2 which was finally used by
+us to calculate likelihood and estimate parameters. And as can be seen
+from Eq2, the limits of the integrals highlight the possible ranges where
+the actual flight time could lie, given a record value. For instance, if the record
+says 5, then the actual flight time could lie anywhere between 40 to 60 seconds
+depending on whether the bird took off just before or just after the first
+dry reading and whether it landed just after or just before the last 
+wet reading. 
+
+With the pseudo data, we integrated the equation to get our maximum 
+likelihood values and predict parameters (more in Results section). 
+
+
+##Estimating parameters
+We wanted to verify whether with the data that we simulated, we could 
+get similar values to what the authors predicted which were $0.41h^1$ for the 
+rate parameter $r$ (this translates to .00011 when the unit is in seconds) and 
+0.31 for the shape parameter (s) . We used the statsmodel package for python to create a custom function that allowed us
+to use the multinomial log-likelihood function equation for optimization 
+and predicting parameters. We created a Gamma class which basically 
+inherited a helper class (provided by the package) called 
+“GenericLikelihoodModel”. This then gives us access to helper functions
+like “fit” and “loglike” that we can customize to suit our own equation
+(see Appendix for usage). 
+
+
+
+#Results and Discussion
+
+After simulating the shifted gamma distribution to sample flight time
+values, we had the following plot showing the pdf:
+
+</br>
+
+![simulation_pdf]
+
+[simulation_pdf]: images/simulation_pdf.png "simulation_pdf" { width:auto; max-width:90% }
+
+</br>
+
+After randomly sampling from this distribution and converting the flight
+times into seconds, we had the following histogram for our flight time 
+values:
+
+</br>
+
+![simulation_histo]
+
+[simulation_histo]: images/simulation_histo.png "simulation_histo" { width:auto; max-width:90% }
+
+
+
+We compared our pseudo data distribution and as expected it looked quite
+similar to original data's distribution. 
+
+Next, we had to calculate the likelihood function. After writing different
+functions for different integrals involved in the Equation 2 above and 
+solving for likelihood function's value at author's predicted values,
+we decided to plot the behavior of our function over varying values of $r$
+and $s$ which are the parameters involved in the log likelihood function.
+This is because ultimately we wanted to check whether we can approximate 
+author's conclusion that the function is maximum at $r=0.0001s^1$ and 
+$s=0.31$.
+
+Here is the plot showing the behavior of log likelihood function with 
+respect to the rate parameter $r$ with constant $s = 0.31$:
+
+</br>
+
+![loglikelihood_rate]
+
+[loglikelihood_rate]: images/loglikelihood_rate.png "loglikelihood_rate" { width:auto; max-width:90% }
+
+Following is the plot showing behavior of log-likelihood function with 
+respect to the shape parameter $s$ with constant $r=0.00011s^{-1}$:
+
+</br>
+
+![loglikelihood_shape]
+
+[loglikelihood_shape]: images/loglikelihood_shape.png "loglikelihood_shape" { width:auto; max-width:90% }
+
+</br>
+
+As can be noticed from these 2 plots, the maximum value of likelihood 
+function is reached with $r$ and $s$ being somewhat close to what authors 
+predicted i.e. $0.00011s^{-1}$ and $0.31$ respectively. 
+
+In order to know the actual predicted values with our pseudo data, we 
+created used the help of GenericLikelihoodModel class by inherting its 
+functions that allow us to fit the data and predict parameters. 
+
+After doing so, we received the following values: 
+$r: 0.0002s^{-1}$ with std. error $2.36e-07$ and
+$s: 0.77$ with std. error $.001$
+
+Our function takes initial starting parameters and irrespective of how
+we changed those, the optimization always predicted same values as above.
+
+So the value of $r$ predicted is almost exactly what authors predicted but
+the values of $s$ is slightly higher. 
+
+The maximum likelihood value using these predicted parameters is given
+as $-1.3604e+07$ by our estimator. 
+
+#Conclusion
+We successfully simulated the multinomial log- likelihood function using 
+pseudo data that was sampled from shifted gamma distribution. We were
+also able to predict values of rate and shape parameters very close to 
+what authors predicted although our predicted shape parameter was slightly 
+higher which could be due to the lack of actual data. The only way to 
+truly replicate findings of the authors would be to get new set of immeersion
+logger data from the albatrosses. But from the data they had collected 
+in 2004, we can conclude that the flight times do follow shifted gamma distribution.
+
+
+
+
+
+
+
+#Appendix (Python code)
+```Python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.special import gamma
+
+###Simulate the shifted gamma pdf
+
+s = 0.31
+r = 0.41
+
+raw_time = np.linspace(0.000001,15,200)
+
+shifted_gamma = ((r**s)*np.exp(-r*(raw_time-1.0/120))*(raw_time-1.0/120)**(s-1))/gamma(s)
+
+plt.xlim(0,15)
+plt.xlabel("Flight times (in hours)")
+plt.suptitle("PDF of $r^s(y^{s-1}e^{-ry})/\Gamma(s)$ with $r=0.41h^{-1}, s=0.31$", fontsize=16)
+plt.plot(raw_time, shifted_gamma, lw=3)
+
+###Normalize probabilties
+
+probabilities= shifted_gamma
+prob = sum(probabilities) 
+c = (1.0)/prob 
+probabilities = map(lambda x: c*x, probabilities)
+flight_times = np.random.choice(raw_time, 1400, p=probabilities)
+
+
+###Convert flight times into seconds
+flight_times_sec = flight_times*3600
+sorted_times = np.sort(flight_times_sec)
+
+###Plot histogram of pseudo data
+plt.xlabel("Flight times (in seconds)", fontsize=16)
+plt.ylabel("Total number of flights", fontsize=16)
+plt.suptitle("Pseudo data generated after sampling from PDF", fontsize=18)
+plt.hist(sorted_times)
+
+###Convert flight times into records
+integer_times = [np.int(i)/10 for i in sorted_times]
+
+
+
+###Function definitions that go into the integrals
+def shift_gamma(x,rl,sl):
+    return ((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+def shift_gamma2(x,j,rl,sl):
+    return (j-(x/10))*((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+def shift_gamma3(x,j,rl,sl):
+    return (x/10-j)*((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+def shift_gamma4(x,j,rl,sl):
+    return x*((rl**sl)*np.exp(-rl*(x-1.0/120))*(x-1.0/120)**(sl-1))/gamma(sl)
+
+
+N = len(integer_times)
+
+
+###Log-likelihood function
+def calc_likelihood(integer_times,r,s):
+    sum_multinomial = []
+    for j in integer_times:
+
+        sum_multinomial.append(np.log((integrate.quad(shift_gamma,10*(j-1),10*(j+1),args=(r,s))[0] - 
+                            integrate.quad(shift_gamma2,10*(j-1),10*(j),args=(j,r,s))[0] - 
+                            integrate.quad(shift_gamma3,10*(j),10*(j+1),args=(j,r,s))[0])))
+
+
+    term_subtract = np.log(1- (4*integrate.quad(shift_gamma,30,40,args=(r,s))[0] - 
+                                              0.1*integrate.quad(shift_gamma4,30,40,args=(j,r,s)[0]))
+    #print(np.sum(sum_multinomial))
+    #print(term_subtract)
+    return N*(np.sum(sum_multinomial) - term_subtract)
+
+
+###Define values of r & s to observe the behavior of function with respect to them
+r_array = np.linspace(0.1/3600,1.3/3600,100)
+s_array = np.linspace(0.1,1.9,100)
+
+likelihood_wrt_r = []
+likelihood_wrt_s = []
+
+###Calculate funtion's behavior based on r and s values
+for s_gl in s_array:
+    likelihood_wrt_s.append(calc_likelihood(integer_times, 0.41/3600, s_gl))
+    
+for r_gl in s_array:
+    likelihood_wrt_r.append(calc_likelihood(integer_times, r_gl, 0.31))
+
+
+###Plot behavior
+plt.xlabel("shape parameter $s$",fontsize=16)
+plt.ylabel("$Log-likelihood: l(\ttheta|r)$",fontsize=16)
+plt.suptitle("Behavior of likelihood function with respect to shape parameter", fontsize=14)
+plt.plot(s_array, likelihood_values)
+
+plt.xlabel("rate parameter $r$",fontsize=16)
+plt.ylabel("$Log-likelihood: l(\ttheta|r)$",fontsize=16)
+plt.suptitle("Behavior of likelihood function with respect to rate parameter", fontsize=14)
+plt.plot(r_array, likelihood_values)
+
+
+
+###Prediction of parameter values using statsmodel's GenericLikelihoodModel
+from statsmodels.base.model import GenericLikelihoodModel
+class Gamma(GenericLikelihoodModel):
+    
+    
+    def __init__(self,endog):
+         super(Gamma, self).__init__(endog)
+        
+    def loglike(self, params):
+        rp = params[0]
+        sp = params[1]
+        return calc_likelihood(self.endog, rp, sp)
+        
+    def fit(self, start_params=np.array([0.11/3600,0.51])):
+        return super(Gamma, self).fit(start_params=start_params)
+        
+
+model = Gamma(integer_times)
+results = model.fit()
+
+
+###Get parameters and print other info like std error and 95% CI
+r1, s1 = results.params
+print(r1, s1)
+results.df_model = len(np.array([0.41/3600,0.31]))
+results.df_resid = len(integer_times) - len(params)
+results.df_resid = len(integer_times) - len(results.params)
+results.summary()
+
+  
+ ```
+    
+
+
+
