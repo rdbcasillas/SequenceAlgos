@@ -1,0 +1,129 @@
+Title         : Assignment5
+Author        : Vatsal Mehra
+Logo          : False
+
+[TITLE]
+
+
+
+#8.13
+In this question we are given $X_i = [56, 101, 78, 67, 93, 87,64, 72, 80, 69]$ and $X_1....X_n$ 
+are identically independent distributed random variables. We are trying to estimate p which is given as
+$ P(a < \sum_{i=1}^{n}X_i/n - \mu < b)  $ where $\mu$ is the known mean of $X_i$
+
+In order to estimate p, we can use bootstrapping which will allow us to get an estimation of the distribution
+of means. This distribution then will basically allow us to see how many of the values fall under a and b
+(which are given as -5 and +5 respectively). That's the whole of point of bootstrapping. It allows us an
+estimation of what the unknown distribution could possibly look like.
+
+In order to do this, we sample from $X_i$ with replacement 10 times and then calculate the mean of these 10
+values. We then compare this value with given mean $\mu$ and check whether it falls under a and b,  or not. 
+
+Its important to keep in mind that a good estimation can only be achieved with large iterations of this process I 
+just described. So we do this over 10000 times to get a good estimation of what $p$ is. First, lets have a look
+at the histogram of the means which we get after doing the sampling with replacement process 10000 times:
+
+</br>
+
+![means_histogram]
+
+[means_histogram]: images/means_histogram.png "means_histogram" { width:auto; max-width:90% }
+
+
+This curve is expected since N is very large(10000 in this case). Now each of these means was checked whether
+it fell under a and b or not. As it turned out, we had the $7643$ successes. This given us the probability
+p to be $7643/10000$ i.e. $0.76$
+
+So after bootstrapping, around 76% time, we get the mean falling withing the range of -5 and +5. 
+
+
+#8.15
+In this question, we are told that $X_1, X_2...X_i$ is a sample from distribution whose variance is unkown. The 
+sample variance is given to be $ S^2 = \sum_{i=1}^{n}(X_i - X)^2/(n-1)$.
+
+In this case n=15 and $X_i = [5,4,9,6,21,17,11,20,7,10,21,15,13,16,8]$.
+
+We will again use bootstrap sampling and sample from $X_i$ with replacement. After sampling 15 values with
+replacement and calculating $S^2$ for each of those arrays 10k times, we get the following histogram:
+
+</br>
+
+![variance_distribution]
+
+[variance_distribution]: images/variance_distribution.png "variance_distribution" { width:auto; max-width:90% }
+
+Again, we notice that after bootstrapping we get a Gaussian distribution of $S^2$ values. In order to 
+estimate the $Var(S^2)$(basically $Var(S_1^2, S_2^2....S_{10k}^{2})$), we 
+just taken the variance of these values which turns out to be 56.13. 
+
+
+#9.1 and 9.12
+
+We are given $\theta = \int_0^1 e^{x^2} dx$
+
+We are expected to show that for uniform random variable U,  estimator $e^(U^2)(1+ e^(1-2u))/2$ is better
+than generating random variables U1 and U2 and using Monte Carlo estimator $[exp(U_{1}^{2}) + exp(U_2^2)]/2$
+  
+
+Its clear that $e^(U^2)(1+ e^(1-2u))/2$ is nothing but $1/2(e^(U^2) + e^((1-U)^2))$ which is basically
+the antithetic variant estimator. To calculate the variance of this, we use variables U and 1-U in the
+above equation. Since $e^x$ is a monotonic, this antithetic variant reduction strategy helps us in reducing
+the variance.
+
+$var(1/2(e^(U^2) + e^((1-U)^2)))$ turns out to be $0.027$. 
+$var([exp(U_{1}^{2}) + exp(U_2^2)]/2)$ turns out to be $0.11$ which is much larger. 
+
+So we were able to achieve decent estimation with antithetic technique over simple Monte Carlo.
+
+
+Now in order to show how control variate can be used to estimate $\theta$, lets take Y(control variate)
+that is correlated or close to X. So we can take $U$ as Y because that is close correlated to $e^(x^2)$.
+
+Now we know that the estimator Z of $\theta$ in case of control variate is $var(X + cY)$
+
+Now $c^*$ can be calculated as $-Cov(X,Y)^2/Var(Y)$. 
+This turns out to be -0.209. Here X is $e^(U^2)$ while $Y$ is $U$.
+
+Now to get the estimator Z, we use $Var(X) - Cov(X,Y)^2/Var(Y)$. We get $Z = .023$. So we again notice
+that control variate helps us in variance reduction as this value is much smaller than Monte Carlo. 
+
+When we calculate the antithetic estimate using same data, we get the variance
+to be .028 which is larger to the variance estimation we had with control
+variate method. But this is for just one loop so we can't say for sure
+which technique is performing better yet. We will have to do better simulation.
+
+Now, lets compare the two variance reduction techniques with some simulation. For this we calculate 
+U(consisting of 100 values chosen between 0 and 1)  and calculate the variance for each of these 
+using each of their respective equations that were used above. We also calculate the variance for normal monte carlo to 
+notice the performance of these techniques. This whole process is done 1000 times and then all these variance values are 
+plotted to compare. 
+
+Following are the histograms that we see:
+
+1. Comparing variant reduction techniques with normal monte carlo estimation: 
+
+</br>
+
+![comparison]
+
+[comparison]: images/comparison.png "comparison" { width:auto; max-width:90% }
+
+
+
+
+It can be clearly seen that both variance reduction techniques are performing very good compared to normal
+estimation. 
+
+2. Comparing antithetic and control variant reduction techniques:
+
+</br>
+
+![comparison2]
+
+[comparison2]: images/comparison2.png "comparison2" { width:auto; max-width:90% }
+
+
+
+
+Although both do a great job, control variate technique seems to be working slightly better with this
+example since we seem to be getting more number of lower variances with it. 

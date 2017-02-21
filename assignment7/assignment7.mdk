@@ -1,0 +1,120 @@
+Title         : Assignment7
+Author        : Vatsal Mehra
+
+
+[TITLE]
+
+#First Question
+We are given that $X_i,i=1,2,3$ as independent exponentials with mean
+$1$. We are told to estimate 
+$E[ X_1 + 2X_2 + 3X_3 | X_1 + 2X_2 + 3X_3 > 15]$ and 
+E[ X1 + 2X2 + 3X3 | X1 + 2X2+ 3X3  < 1 ]
+
+In order to do this, we first assign X1, X2 and X3 some values and then 
+randomly pick from one of either of these exponentials. After picking
+one, we change its value using $-log(U)$ . After this assignment, we
+can check for whether we satisfy the condition $X_1 + 2X_2 + 3X_3 >15$ or
+not. If it is satisfied, we keep that value. In my simulation, I do
+this process a 10000 times and the mean value of $X_1 + 2X_2 + 3X_3$ comes
+out to be $18.62$.
+
+We do the same process for the condition $X_1 + 2X_2 + 3X_3 < 1$. 
+This time the mean value of $X_1 + 2X_2 + 3X_3$ comes
+out to be $0.72$.
+
+Here are the histograms of the $X_1 + 2X_2 + 3X_3$ for both conditions:
+
+![Assign7_part1]
+
+[Assign7_part1]: images/Assign7_part1.png "Assign7_part1" { width:auto; max-width:90% }
+
+
+
+![Assign7_part2]
+
+[Assign7_part2]: images/Assign7_part2.png "Assign7_part2" { width:auto; max-width:90% }
+
+
+
+#Second question
+In this problem, we are given that $a=1.5, b=0.1 and X_o = 1$
+
+We need to find numerical approximation using 2 methods and see how
+good they do in this approximation by calculating the errors at various
+time step size. 
+**With Euler Maruyama** method, we have:
+~ Equation
+Y_{n+1} = Y_n + a(t_n,Y_n)\triangle{t} + b(t_n, Y_n)\triangle(W_n)
+
+~
+
+Exact solution path is given by 
+~ Equation
+X_t = X_o(exp((a-b^2/2)t) + bW_t)
+
+~
+
+We calculate these solutions using the time steps of size 
+$\triangle{t} = 2^{-3}, 2^{-4}, 2^{-5}, 2^{-6}$
+
+We generate 100 simulations for each of the time step size given and
+calculate both the numerical solutions and the exact solution.
+
+Since $E^2[\triangle{W_n}] = \triangle{t}$ and $E[\triangle{W_n}] = 0$,
+our $\triangle{W_n}$ becomes $sqrt(\triangle{t}*U)$.
+
+For error, we are given, $\epsilon = 1/N(\sum_{j=1}^{N}|X_{T}^j - Y_{T}^{j}|)$
+
+After calculating Y and X at various time step size, we notice that we get
+following error values:
+
+|  deltaT   |     Error    | 
+|:-----|:----------:|
+| 1/8    |   0.229   | 
+| 1/16    |   0.117   |   
+| 1/32   |  0.061  |                   
+| 1/64 | 0.034   |
+
+Here is the plot highlighting the error values for Euler Maruyama:
+
+![Euler]
+
+[Euler]: images/Euler.png "Euler" { width:auto; max-width:90% }
+
+
+
+As can be seen that with smaller step size, the error becomes smaller
+and our numerical solution reaches closer to the exact solution. 
+
+**With Huen method**, we have:
+
+~ Equation
+\tilde{Y_{n+1}} = Y_n + a(t_n,Y_n)\triangle{t} + b(t_n, Y_n)\triangle(W_n)
+~
+and
+~Equation
+Y_{n+1} = Y_n + 1/2(a(t_n,Y_n) + a(t_n,\tilde{Y_{n+1}}))\triangle{t} + 1/2(b(t_n, Y_n) + b(t_n,\tilde{Y_{n+1}}))\triangle(W_n)
+
+~
+
+
+
+Following are the errors we get:
+
+
+|  deltaT   |     Error    | 
+|:-----|:----------:|
+| 1/8    |   0.17  | 
+| 1/16    |   0.048   |   
+| 1/32   |  0.013  |                   
+| 1/64 | 0.004   |
+
+Following is the plot for the errors that we get for Heun method:
+
+![Heun]
+
+[Heun]: images/Heun.png "Heun" { width:auto; max-width:90% }
+
+As can be noticed, again we see that smaller step size decreases the
+error. Moreover, Heun seems to be performing better than Euler Maruyama
+in approximating the solution. 
