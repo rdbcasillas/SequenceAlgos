@@ -1,3 +1,9 @@
+########################################################
+### This program takes a DNA (or any string) input #####
+### and the length of kmer to find which kmer has  #####
+### maximum frequency. In "ATAGGATGGAT", 2-mer "AT" #### 
+### occurs maximum times, so that will be returned. ####
+########################################################
 def findkmer(string, k):
     stringfreq = {}
     for i in range(0, len(string)):
